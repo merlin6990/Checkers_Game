@@ -58,3 +58,429 @@ void board(){
 }
 
 //background
+//backend
+int back[8][8]={{0,-1,0,-1,0,-1,0,-1},{-1,0,-1,0,-1,0,-1,0},{0,-1,0,-1,0,-1,0,-1},{0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0},{1,0,1,0,1,0,1,0},{0,1,0,1,0,1,0,1},{1,0,1,0,1,0,1,0}};
+bool isvalid=true,bonus=false;
+bool X_won=false,O_won=false;
+int countx=0,county=0;
+void change(char y1,int x1,char y2,int x2,int i){
+	int xs=-1*(x1)+8;
+	int ys=int(y1)-97;
+	int xf=-1*(x2)+8;
+	int yf=int(y2)-97;	
+
+	
+	
+	
+	
+	if((i%2==1)&&(back[xs][ys]!=11)){
+		
+		if(back[xs][ys]!=1){
+			isvalid= false;
+			return;
+		}
+		if((back[xf][yf]==-1) || (back[xf][yf]==1)){
+			isvalid= false;
+			return;
+		}
+		if(((xf%2==0) &&(yf%2==0)) || ((xf%2==1) && (yf%2==1))){
+			isvalid= false;
+			return;			
+		}
+		if((xs-xf>2) || (xs-xf<=0)){
+			isvalid= false;
+			return;				
+		}
+		if((xs-xf ==2) && ((back[(xf+xs)/2][(ys+yf)/2]!=-1) && (back[(xf+xs)/2][(ys+yf)/2]!=-11))){
+			isvalid= false;
+			return;			
+		}
+		if((xs-xf==1) && ((back[xs+1][ys-1]==-1) ||(back[xs+1][ys-1]==-11) ||  (back[xs+1][ys+1]==-1) ||(back[xs+1][ys+1]==-11)  || (back[xs-1][ys+1]==-1) ||(back[xs-1][ys-1]==-1)  || (back[xs-1][ys+1]==-11) ||(back[xs-1][ys-1]==-11)  )){
+			if(((back[xs-1][ys-1]==-1) ||(back[xs-1][ys-1]==-11))&& (back[xs-2][ys-2]==0) &&((xs-2<8)&&(ys-2<8))){
+				isvalid=false;
+				return;
+			}
+			if(((back[xs-1][ys+1]==-1) ||(back[xs-1][ys+1]==-11))&& (back[xs-2][ys+2]==0) &&((xs-2<8)&&(ys+2<8))){
+				isvalid=false;
+				return;
+			}			
+		}
+		if(xs-xf ==1){
+			back[xs][ys]=0;
+			back[xf][yf]=1;
+		}
+		else if(xs-xf ==2){
+			back[xs][ys]=0;
+			back[(xs+xf)/2][(ys+yf)/2]=0;
+			back[xf][yf]=1;
+			bonus=true;			
+		}
+		for(int i=0;i<=7;i++){
+			if(back[0][i]==1){
+				back[0][i]=11;
+			}
+		}
+	}
+	else if((i%2==1)&&(back[xs][ys]==11)){
+		if((back[xf][yf]==-1) || (back[xf][yf]==1)){
+			isvalid= false;
+			return;
+		}
+		if(((xf%2==0) &&(yf%2==0)) || ((xf%2==1) && (yf%2==1))){
+			isvalid= false;
+			return;			
+		}
+		if((xs-xf>2) || (xs-xf<-2)){
+			isvalid= false;
+			return;				
+		}		
+		if(((xs-xf ==2) || (xs-xf ==-2)) && ((back[(xf+xs)/2][(ys+yf)/2]!=-1) && (back[(xf+xs)/2][(ys+yf)/2]!=-11))){
+			isvalid= false;
+			return;			
+		}	
+		if(((xs-xf==1) || (xs-xf==-1)) && ((back[xs+1][ys-1]==-1) ||(back[xs+1][ys-1]==-11) ||  (back[xs+1][ys+1]==-1) ||(back[xs+1][ys+1]==-11)  || (back[xs-1][ys+1]==-1) ||(back[xs-1][ys-1]==-1)  || (back[xs-1][ys+1]==-11) ||(back[xs-1][ys-1]==-11)  )){
+			if(((back[xs+1][ys-1]==-1) ||(back[xs+1][ys-1]==-11)) &&(back[xs+2][ys-2]==0) &&((xs+2<8)&&(ys-2<8))){
+					isvalid=false;
+					return;
+			}
+			if(((back[xs+1][ys+1]==-1) ||(back[xs+1][ys+1]==-11)) &&(back[xs+2][ys+2]==0) &&((xs+2<8)&&(ys+2<8))){
+					isvalid=false;
+					return;
+			}
+			if(((back[xs-1][ys-1]==-1) ||(back[xs-1][ys-1]==-11)) &&(back[xs-2][ys-2]==0) &&((xs-2<8)&&(ys-2<8))){
+					isvalid=false;
+					return;
+			}
+			if(((back[xs-1][ys+1]==-1) ||(back[xs-1][ys+1]==-11)) &&(back[xs-2][ys+2]==0)&&((xs-2<8)&&(ys+2<8))){
+					isvalid=false;
+					return;
+			}						
+		}
+		if((xs-xf==1) ||(xs-xf==-1)){
+			back[xs][ys]=0;
+			back[xf][yf]=11;			
+		}
+		else if(((xs-xf ==2) || (xs-xf ==-2))){
+			back[xs][ys]=0;
+			back[(xs+xf)/2][(ys+yf)/2]=0;
+			back[xf][yf]=11;
+			bonus=true;			
+		}						
+	}
+	else if((i%2==0) && (back[xs][ys]!=-11)){
+		if(back[xs][ys]!=-1){
+			isvalid= false;
+			return;
+		}		
+		if((back[xf][yf]==-1) || (back[xf][yf]==1)){
+			isvalid= false;
+			return;
+		}
+		if(((xf%2==0) &&(yf%2==0)) || ((xf%2==1) && (yf%2==1))){
+			isvalid=false;
+			return;
+		}
+		if((xs-xf<-2) || (xs-xf>=0)){
+			isvalid= false;
+			return;				
+		}
+		if((xs-xf ==-2) && ((back[(xf+xs)/2][(ys+yf)/2]!=1) && (back[(xf+xs)/2][(ys+yf)/2]!=11))){
+			isvalid= false;
+			return;			
+		}
+		if((xs-xf==-1) && ((back[xs+1][ys-1]==1) ||(back[xs+1][ys-1]==11) ||  (back[xs+1][ys+1]==1) ||(back[xs+1][ys+1]==11)  || (back[xs-1][ys+1]==1) ||(back[xs-1][ys-1]==1)  || (back[xs-1][ys+1]==11) ||(back[xs-1][ys-1]==11)  )){
+			if(((back[xs+1][ys-1]==1) ||(back[xs+1][ys-1]==11))&& (back[xs+2][ys-2]==0)&&((xs+2<8)&&(ys-2<8))){
+				isvalid=false;
+				return;
+			}
+			if(((back[xs+1][ys+1]==1) ||(back[xs+1][ys+1]==11))&& (back[xs+2][ys+2]==0)&&((xs+2<8)&&(ys+2<8))){
+				isvalid=false;
+				return;
+			}
+		}				
+		if(xs-xf ==-1){
+			back[xs][ys]=0;
+			back[xf][yf]=-1;
+		}
+		else if(xs-xf ==-2){
+			back[xs][ys]=0;
+			back[(xs+xf)/2][(ys+yf)/2]=0;
+			back[xf][yf]=-1;
+			bonus=true;			
+		}		
+		for(int i=0;i<=7;i++){
+			if(back[7][i]==-1){
+				back[7][i]=-11;
+			}
+		}					
+	}
+	else if((i%2==0)&&(back[xs][ys]==-11)){		
+		if((back[xf][yf]==-1) || (back[xf][yf]==1)){
+			isvalid= false;
+			return;
+		}		
+		if(((xf%2==0) &&(yf%2==0)) || ((xf%2==1) && (yf%2==1))){
+			isvalid= false;
+			return;			
+		}
+		if((xs-xf>2) || (xs-xf<-2)){
+			isvalid= false;
+			return;				
+		}
+		if(((xs-xf ==2) || (xs-xf ==-2)) && ((back[(xf+xs)/2][(ys+yf)/2]!=1) && (back[(xf+xs)/2][(ys+yf)/2]!=11) )){
+			isvalid= false;
+			return;			
+		}
+		if(((xs-xf==1) || (xs-xf==-1)) && ((back[xs+1][ys-1]==1) ||(back[xs+1][ys-1]==11) ||  (back[xs+1][ys+1]==1) ||(back[xs+1][ys+1]==11)  || (back[xs-1][ys+1]==1) ||(back[xs-1][ys-1]==1)  || (back[xs-1][ys+1]==11) ||(back[xs-1][ys-1]==11)  )){
+			if(((back[xs+1][ys-1]==1) ||(back[xs+1][ys-1]==11)) &&(back[xs+2][ys-2]==0)&&((xs+2<8)&&(ys-2<8))){
+					isvalid=false;
+					return;
+			}
+			if(((back[xs+1][ys+1]==1) ||(back[xs+1][ys+1]==11)) &&(back[xs+2][ys+2]==0)&&((xs+2<8)&&(ys+2<8))){
+					isvalid=false;
+					return;
+			}
+			if(((back[xs-1][ys-1]==1) ||(back[xs-1][ys-1]==11)) &&(back[xs-2][ys-2]==0)&&((xs-2<8)&&(ys-2<8))){
+					isvalid=false;
+					return;
+			}
+			if(((back[xs-1][ys+1]==1) ||(back[xs-1][ys+1]==11)) &&(back[xs-2][ys+2]==0)&&((xs-2<8)&&(ys+2<8))){
+					isvalid=false;
+					return;
+			}
+		}		
+		if((xs-xf==1) ||(xs-xf==-1)){
+			back[xs][ys]=0;
+			back[xf][yf]=-11;			
+		}
+		else if(((xs-xf ==2) || (xs-xf ==-2))){
+			back[xs][ys]=0;
+			back[(xs+xf)/2][(ys+yf)/2]=0;
+			back[xf][yf]=-11;
+			bonus=true;			
+		}								
+	}
+	
+	
+	if(i%2==1){
+	for(int i=0;i<=7;i++){
+		for(int j=0;j<=7;j++){
+			if((back[i][j]==0)  || (back[i][j]==1) || (back[i][j]==11)){
+				countx++;
+			}
+		}
+	}	
+	if(countx==64){
+		X_won=true;
+		return;
+	}
+	else{
+	countx=0;}
+	return;
+}
+else{
+	for(int i=0;i<=7;i++){
+		for(int j=0;j<=7;j++){
+			if((back[i][j]==0)  || (back[i][j]==-1) || (back[i][j]==-11)){
+				county++;
+			}
+		}
+	}
+	if(county==64){
+		O_won=true;
+		return;
+	}
+	else{
+	county=0;}		
+}
+}
+//moves
+void move(char x,int s,char y,int f,int i){
+	if(i%2!=0){
+	int xs,ys,xf,yf;
+	xs=4*(int(x)-96)+1;
+	ys=16-(2*(s-1));
+	xf=4*(int(y)-96)+1;
+	yf=16-(2*(f-1));
+	
+	
+	int xars=-1*(s)+8;
+	int yars=int(x)-97;
+	int xarf=-1*(f)+8;
+	int yarf=int(y)-97;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	change(x,s,y,f,i);
+	
+	
+	
+	
+	if(isvalid==false){
+		gotoxy(6,18);
+		cout<<"\r";
+		cout<<"invalid move please try again!";
+		return;
+	}
+	else{
+		if(back[xarf][yarf]!=11){
+		if(bonus==false){
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"X";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"O move:                             ";
+	    gotoxy(7,18);
+	    return;
+		}
+		else{
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy((xs+xf)/2,(ys+yf)/2);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"X";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"O move:                             ";
+	    gotoxy(7,18);
+	    return;			
+		}
+	    }
+		else{
+		if(bonus==false){
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"XX";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"O move:                             ";
+	    gotoxy(7,18);
+	    return;
+		}
+		else{
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy((xs+xf)/2,(ys+yf)/2);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"XX";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"O move:                             ";
+	    gotoxy(7,18);
+	    return;			
+		}			
+		}	
+	}
+
+}
+else{
+	int xs,ys,xf,yf;
+	xs=4*(int(x)-96)+1;
+	ys=16-(2*(s-1));
+	xf=4*(int(y)-96)+1;
+	yf=16-(2*(f-1));
+	
+	
+	int xars=-1*(s)+8;
+	int yars=int(x)-97;
+	int xarf=-1*(f)+8;
+	int yarf=int(y)-97;	
+	
+	
+	change(x,s,y,f,i);
+	//if(X_won || O_won){
+	//	return;
+	//}	
+	if(isvalid==false){
+		gotoxy(6,18);
+		cout<<"\r";
+		cout<<"invalid move please try again!";
+		return;
+	}
+	else{
+		if(back[xarf][yarf]!=-11){
+		if(bonus==false){
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"O";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"X move:                             ";
+	    gotoxy(7,18);
+	    return;
+		}
+		else{
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy((xs+xf)/2,(ys+yf)/2);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"O";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"X move:                             ";
+	    gotoxy(7,18);
+	    return;			
+		}
+	    }
+		else{
+		if(bonus==false){
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"OO";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"X move:                             ";
+	    gotoxy(7,18);
+	    return;
+		}
+		else{
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy((xs+xf)/2,(ys+yf)/2);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"OO";
+	    gotoxy(6,18);
+	    
+	    cout<<"\r"<<"X move:                             ";
+	    gotoxy(7,18);
+	    return;			
+		}			
+		}	
+	}		
+
+}
+/*thsi is the checkers backend part where we detect the move determine whether it is a valid move or not 
+and then execute it*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
