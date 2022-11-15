@@ -296,6 +296,7 @@ else{
 }
 //moves
 void move(char x,int s,char y,int f,int i){
+	if(i%2!=0){
 	int xs,ys,xf,yf;
 	xs=4*(int(x)-96)+1;
 	ys=16-(2*(s-1));
@@ -308,7 +309,160 @@ void move(char x,int s,char y,int f,int i){
 	int xarf=-1*(f)+8;
 	int yarf=int(y)-97;
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	change(x,s,y,f,i);
+	
+	
+	
+	
+	if(isvalid==false){
+		gotoxy(6,18);
+		cout<<"\r";
+		cout<<"invalid move please try again!";
+		return;
+	}
+	else{
+		if(back[xarf][yarf]!=11){
+		if(bonus==false){
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"X";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"O move:                             ";
+	    gotoxy(7,18);
+	    return;
+		}
+		else{
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy((xs+xf)/2,(ys+yf)/2);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"X";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"O move:                             ";
+	    gotoxy(7,18);
+	    return;			
+		}
+	    }
+		else{
+		if(bonus==false){
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"XX";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"O move:                             ";
+	    gotoxy(7,18);
+	    return;
+		}
+		else{
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy((xs+xf)/2,(ys+yf)/2);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"XX";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"O move:                             ";
+	    gotoxy(7,18);
+	    return;			
+		}			
+		}	
+	}
+
+}
+else{
+	int xs,ys,xf,yf;
+	xs=4*(int(x)-96)+1;
+	ys=16-(2*(s-1));
+	xf=4*(int(y)-96)+1;
+	yf=16-(2*(f-1));
+	
+	
+	int xars=-1*(s)+8;
+	int yars=int(x)-97;
+	int xarf=-1*(f)+8;
+	int yarf=int(y)-97;	
+	
+	
+	change(x,s,y,f,i);
+	//if(X_won || O_won){
+	//	return;
+	//}	
+	if(isvalid==false){
+		gotoxy(6,18);
+		cout<<"\r";
+		cout<<"invalid move please try again!";
+		return;
+	}
+	else{
+		if(back[xarf][yarf]!=-11){
+		if(bonus==false){
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"O";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"X move:                             ";
+	    gotoxy(7,18);
+	    return;
+		}
+		else{
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy((xs+xf)/2,(ys+yf)/2);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"O";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"X move:                             ";
+	    gotoxy(7,18);
+	    return;			
+		}
+	    }
+		else{
+		if(bonus==false){
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"OO";
+	    gotoxy(6,18);
+	    cout<<"\r"<<"X move:                             ";
+	    gotoxy(7,18);
+	    return;
+		}
+		else{
+	    gotoxy(xs,ys);
+	    cout<<"  ";
+	    gotoxy((xs+xf)/2,(ys+yf)/2);
+	    cout<<"  ";
+	    gotoxy(xf,yf);
+	    cout<<"OO";
+	    gotoxy(6,18);
+	    
+	    cout<<"\r"<<"X move:                             ";
+	    gotoxy(7,18);
+	    return;			
+		}			
+		}	
+	}		
+
+}
+
+
+
 
 
 
