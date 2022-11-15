@@ -294,3 +294,38 @@ else{
 	county=0;}		
 }
 }
+//moves
+void move(char x,int s,char y,int f,int i){
+	int xs,ys,xf,yf;
+	xs=4*(int(x)-96)+1;
+	ys=16-(2*(s-1));
+	xf=4*(int(y)-96)+1;
+	yf=16-(2*(f-1));
+	
+	
+	int xars=-1*(s)+8;
+	int yars=int(x)-97;
+	int xarf=-1*(f)+8;
+	int yarf=int(y)-97;
+	
+	change(x,s,y,f,i);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
