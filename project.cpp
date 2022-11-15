@@ -466,6 +466,46 @@ and then execute it*/
 
 
 
+int main(){
+	board();
+	gotoxy(0,18);
+	cout<<"X move:";
+	for(int i=1;i>0;i++){
+	char x,y;
+	int s,f;
+	cin>>x>>s>>y>>f;
+	move(x,s,y,f,i);
+	if(O_won || X_won){
+		break;
+	}	
+	if(isvalid==false){
+		isvalid=true;
+		i--;
+	}
+	if(bonus==true){
+		bonus=false;
+	}
+	}
+	if(X_won){
+		gotoxy(6,18);
+		cout<<"\r";
+		cout<<"                  *************                     "<<endl;
+		cout<<"                  ***[X Won]***                     "<<endl;
+		cout<<"                  *************                     ";
+	}
+	else{
+		gotoxy(6,18);
+		cout<<"\r";
+		cout<<"                  *************                     "<<endl;
+		cout<<"                  ***[O Won]***                     "<<endl;
+		cout<<"                  *************                     ";		
+	}
+	return 0;
+	
+}
+
+
+
 
 
 
