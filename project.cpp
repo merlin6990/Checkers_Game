@@ -460,7 +460,8 @@ else{
 	}		
 
 }
-
+/*thsi is the checkers backend part where we detect the move determine whether it is a valid move or not 
+and then execute it*/
 
 
 
