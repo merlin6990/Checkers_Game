@@ -466,6 +466,9 @@ and then execute it*/
 
 
 
+
+
+}
 int main(){
 	board();
 	gotoxy(0,18);
@@ -502,25 +505,4 @@ int main(){
 	}
 	return 0;
 	
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
